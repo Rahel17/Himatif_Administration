@@ -78,7 +78,7 @@ class PengeluaranController extends Controller
             'uraian' => 'nullable|string',
             'bidang' => 'required|in:Inti,PSDM,Kerohanian,Humas,Kominfo,Danus,Minbak',
             'nominal' => 'required|numeric|min:0',
-            'dokumen' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'dokumen' => 'nullable|file|mimes:pdf,xlsx,xls,csv',
             'penanggungjawab' => 'required|exists:users,id',
         ]);
 

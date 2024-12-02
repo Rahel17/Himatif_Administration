@@ -61,7 +61,7 @@ class PengajuanPengeluaranController extends Controller
             'uraian' => 'nullable|string',
             'bidang' => 'required|in:' . implode(',', $bidangList), // Validasi berdasarkan bidang yang ada
             'nominal' => 'required|numeric|min:0',
-            'dokumen' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:2048',
+            'dokumen' => 'nullable|file|mimes:pdf,jpg,jpeg,png,xlsx,xls,csv',
         ]);
 
         // Upload dokumen jika ada

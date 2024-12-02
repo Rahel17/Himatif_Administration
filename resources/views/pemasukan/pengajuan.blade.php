@@ -147,7 +147,7 @@
                                             <div class="col-md-6">
                                                 <label for="inputDokumen" class="form-label">Dokumen</label>
                                                 <input type="file" class="form-control" id="inputDokumen"
-                                                    name="dokumen" accept="application/pdf,image/*">
+                                                       name="dokumen" accept="application/pdf,image/*,.xlsx,.xls,.csv">
                                                 @error('dokumen')
                                                     <small class="text-danger">{{ $message }}</small>
                                                 @enderror

@@ -58,7 +58,7 @@ class BayarKasController extends Controller
             'bulan' => 'required|string|in:januari,februari,maret,april,mei,juni,juli,agustus,september,oktober',
             'nominal' => 'required|numeric|min:5000',
             'tanggal' => 'required|date',
-            'bukti' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'bukti' => 'required|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         $buktiPath = $request->file('bukti')->store('bukti', 'public');
