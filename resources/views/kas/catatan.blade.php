@@ -24,6 +24,7 @@
                             <table class="table datatable table-bordered align-middle text-sm">
                                 <thead>
                                     <tr>
+                                        <th>Waktu Bayar</th>
                                         <th>Nama</th>
                                         <th>NPM</th>
                                         <th>Bidang</th>
@@ -41,6 +42,7 @@
                                 <tbody>
                                     @foreach ($kas as $item)
                                         <tr>
+                                            <td>{{ $item->created_at }}</td>
                                             <td>{{ $item->user->name ?? 'Tidak Diketahui' }}</td>
                                             <td>{{ $item->user->npm ?? 'NPM Tidak Diketahui' }}</td>
                                             <td>{{ $item->user->bidang ?? 'Bidang Tidak Diketahui' }}</td>
@@ -54,7 +56,7 @@
                                                     <span class="text-muted">Tidak ada bukti</span>
                                                 @endif
                                             </td>
-                                            <td>{{ $item->bulan <= 'Oktober' && $item->status === 'setuju' ? 'Lunas' : 'Belum Lunas' }}</td>
+                                            <td>{{ $item->bulan <= 'Oktober' && $item->status === 'setuju' ? 'Lunas' : 'Lunas' }}</td>
 
                                             @if (auth()->user()->role === 'admin')
                                                 <td class="d-flex justify-content-center align-items-center">

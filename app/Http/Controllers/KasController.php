@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class KasController extends Controller
 {
@@ -13,19 +14,43 @@ class KasController extends Controller
      */
     public function index(Request $request)
     {
+        $user = Auth::user();
+        $kas = Transaksi::where('user_id', $user->id)
+        ->whereIn('status', ['setuju', 'proses'])
+        ->orderBy('tanggal', 'desc')
+        ->get();
+
         // Ambil bulan yang dipilih dari request
         $bulan = $request->input('bulan');
 
-        // Ambil data kas yang disetujui dan memiliki bukti
-        $kas = Transaksi::where('status', 'setuju') // Filter berdasarkan status 'setuju'
-            ->whereNotNull('bukti') // Pastikan ada bukti (kolom bukti tidak null)
-            ->when($bulan, function ($query) use ($bulan) {
-                return $query->where('bulan', $bulan); // Filter berdasarkan bulan jika ada
-            })
-            ->get();
+        // Logika filter berdasarkan peran pengguna
+        if ($user->role === 'admin' || $user->role === 'bendum') {
+            // Admin atau bendahara melihat semua catatan kecuali pemasukan dan pengeluaran
+            $kas = Transaksi::with('user')
+                ->whereNull('pemasukan') // Filter kecuali pemasukan/pengeluaran
+                ->whereNull('pengeluaran') // Filter kecuali pemasukan/pengeluaran
+                ->when($bulan, function ($query) use ($bulan) {
+                    return $query->where('bulan', $bulan); // Filter bulan jika dipilih
+                })
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            // Anggota hanya melihat catatan miliknya sendiri kecuali pemasukan/pengeluaran
+            $kas = Transaksi::with('user')
+                ->where('user_id', $user->id)
+                ->whereNull('pemasukan') // Filter kecuali pemasukan/pengeluaran
+                ->whereNull('pengeluaran') // Filter kecuali pemasukan/pengeluaran
+                ->when($bulan, function ($query) use ($bulan) {
+                    return $query->where('bulan', $bulan); // Filter bulan jika dipilih
+                })
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
 
         return view('kas.catatan', compact('kas'));
     }
+
+
 
 
     /**

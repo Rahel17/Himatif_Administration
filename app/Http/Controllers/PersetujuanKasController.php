@@ -14,9 +14,9 @@ class PersetujuanKasController extends Controller
     {
         // Menampilkan data pembayaran kas yang belum disetujui
         $kas = Transaksi::whereIn('status', ['proses', 'tolak']) // Perlihatkan yang statusnya "proses" atau "ditolak"
-        ->whereNotNull('bulan') // Hanya data pemasukan
-        ->orderBy('tanggal', 'desc')
-        ->get();
+            ->whereNotNull('bulan') // Hanya data pemasukan
+            ->orderBy('tanggal', 'desc')
+            ->get();
 
         return view('kas.persetujuan', compact('kas'));
     }
@@ -24,9 +24,9 @@ class PersetujuanKasController extends Controller
     public function setujui($id)
     {
         // Menyetujui pembayaran kas
-        $kas = Transaksi::findOrFail($id);
-        $kas->status = 'setuju';
-        $kas->save();
+        $transaction = Transaksi::findOrFail($id);
+        $transaction->status = 'setuju';
+        $transaction->save();
 
         return redirect()->route('kas.persetujuan')->with('success', 'Pembayaran kas disetujui.');
     }
@@ -34,12 +34,13 @@ class PersetujuanKasController extends Controller
     public function tolak($id)
     {
         // Menolak pembayaran kas
-        $kas = Transaksi::findOrFail($id);
-        $kas->status = 'tolak';
-        $kas->save();
+        $transaction = Transaksi::findOrFail($id);
+        $transaction->status = 'tolak';
+        $transaction->save();
 
         return redirect()->route('kas.persetujuan')->with('error', 'Pembayaran kas ditolak.');
     }
+
 
     /**
      * Show the form for creating a new resource.

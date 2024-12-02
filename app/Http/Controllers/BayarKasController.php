@@ -87,7 +87,7 @@ class BayarKasController extends Controller
         return redirect()->route('kas.bayar')->with('success', 'Status Pembayaran Diperbarui');
     }
 
-
+    
 
     /**
      * Display the specified resource.
