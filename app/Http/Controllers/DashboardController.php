@@ -63,4 +63,34 @@ class DashboardController extends Controller
             'kasBulanan'
         ));
     }
+
+    public function laporanKeuangan()
+    {
+        $currentYear = Carbon::now()->year;
+
+        // Total pemasukan
+        $totalPemasukan = Transaksi::whereNotNull('pemasukan')
+            ->where('status', 'setuju')
+            ->whereYear('tanggal', $currentYear)
+            ->sum('nominal');
+
+        // Total pengeluaran
+        $totalPengeluaran = Transaksi::whereNotNull('pengeluaran')
+            ->where('status', 'setuju')
+            ->whereYear('tanggal', $currentYear)
+            ->sum('nominal');
+
+        // Total kas anggota
+        $totalKasAnggota = Transaksi::where('pemasukan', 'kas_anggota')
+            ->where('status', 'setuju')
+            ->whereYear('tanggal', $currentYear)
+            ->sum('nominal');
+
+        return view('dashboard', compact(
+            'totalPemasukan',
+            'totalPengeluaran',
+            'totalKasAnggota',
+            'currentYear'
+        ));
+    }
 }

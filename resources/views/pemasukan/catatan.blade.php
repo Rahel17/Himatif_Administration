@@ -21,6 +21,9 @@
 
 
     <section class="section">
+
+        {{-- <button onclick="window.print()">Cetak Laporan</button> --}}
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="card shadow-sm">
@@ -29,7 +32,10 @@
                         <p class="card-text text-muted">
                             Pemasukan selama satu tahun kepengurusan. Akan dipertanggungjawabkan pada Musyawarah Besar.
                         </p>
-
+                        {{-- tombol cetak --}}
+                        {{-- <button type="button" class="btn btn-info" onclick="window.print()">
+                            <i class="bi bi-printer"></i> Cetak
+                        </button> --}}
                         <!-- Table with stripped rows -->
                         <div class="table-responsive">
                             <table class="table table-bordered align-middle datatable text-sm">

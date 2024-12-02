@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Laporan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\KasController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BayarKasController;
 use App\Http\Controllers\DashboardController;
@@ -13,6 +15,7 @@ use App\Http\Controllers\PengajuanPemasukanController;
 use App\Http\Controllers\PengajuanPengeluaranController;
 use App\Http\Controllers\PersetujuanPemasukanController;
 use App\Http\Controllers\PersetujuanPengeluaranController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,6 +23,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+    Route::get('/laporan-keuangan', [DashboardController::class, 'laporanKeuangan'])->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {
@@ -70,6 +74,6 @@ Route::get('/BayarKas', [BayarKasController::class, 'index'])->name('kas.bayar')
 Route::post('/BayarKas/store', [BayarKasController::class, 'store'])->name('kas.store');
 Route::post('/kas/update-status/{id}', [BayarKasController::class, 'updateStatus'])->name('kas.updateStatus');
 
-
+// Route::get('/laporan-keuangan', [LaporanController::class, 'laporanKeuangan'])->name('laporan-keuangan');
 
 require __DIR__ . '/auth.php';

@@ -12,10 +12,10 @@
     <!-- Favicons -->
     <link href="assets/img/logo-himatif.png" rel="icon">
     {{-- <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> --}}
-    
+
     {{-- Notifications --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-    
+
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link
@@ -61,23 +61,24 @@
 
                 <li class="nav-item dropdown pe-3">
 
-                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"
+                        data-bs-toggle="dropdown">
                         <span class="d-none d-md-block dropdown-toggle ps-2">{{ Auth::user()->name }}</span>
                     </a>
                     <!-- End Profile Iamge Icon -->
 
                     <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                         <li class="dropdown-header">
-                            @if(auth()->user()->role === 'admin')
-                            <h6>Kepala AdminKeu</h6>
+                            @if (auth()->user()->role === 'admin')
+                                <h6>Kepala AdminKeu</h6>
                             @endif
 
-                            @if(auth()->user()->role === 'bendum')
-                            <h6>Bendahara Umum</h6>
+                            @if (auth()->user()->role === 'bendum')
+                                <h6>Bendahara Umum</h6>
                             @endif
 
-                            @if(auth()->user()->role === 'anggota')
-                            <h6>{{ Auth::user()->name }}</h6>
+                            @if (auth()->user()->role === 'anggota')
+                                <h6>{{ Auth::user()->name }}</h6>
                             @endif
                             {{-- <span>Web Designer</span> --}}
                         </li>
@@ -85,7 +86,7 @@
                             <hr class="dropdown-divider">
                         </li>
 
-                        <li>
+                        {{-- <li>
                             <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                                 <i class="bi bi-person"></i>
                                 <span>My Profile</span>
@@ -93,14 +94,14 @@
                         </li>
                         <li>
                             <hr class="dropdown-divider">
-                        </li>
+                        </li> --}}
 
-                        <li>
+                        {{-- <li>
                             <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                                 <i class="bi bi-gear"></i>
                                 <span>Account Settings</span>
                             </a>
-                        </li>
+                        </li> --}}
                         <li>
                             <hr class="dropdown-divider">
                         </li>
@@ -111,8 +112,7 @@
                                 <i class="bi bi-box-arrow-right"></i>
                                 <span>Sign Out</span>
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                style="display: none;">
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                         </li>
@@ -135,78 +135,80 @@
                     <span>Beranda</span>
                 </a>
             </li><!-- End Dashboard Nav -->
-            @if(auth()->user()->role === 'admin')
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="{{ route('anggota.index') }}">
-                    <i class="bi bi-person"></i>
-                    <span>Anggota</span>
-                </a>
-            </li>
+            @if (auth()->user()->role === 'admin')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ route('anggota.index') }}">
+                        <i class="bi bi-person"></i>
+                        <span>Anggota</span>
+                    </a>
+                </li>
             @endif <!-- End Profile Page Nav -->
 
-            @if(auth()->user()->role === 'admin' || auth()->user()->role === 'bendum')
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
-                    href="#">
-                    <i class="bi bi-journal-text"></i><span>Pemasukan</span><i
-                        class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ route('pemasukan.catatan') }}">
-                            <i class="bi bi-circle"></i><span>Catatan Pemasukan</span>
-                        </a>
-                    </li>
-                    {{-- admin --}}
-                    @if(auth()->user()->role === 'admin')
-                    <li>
-                        <a href="{{ route('pemasukan.persetujuan') }}">
-                            <i class="bi bi-circle"></i><span>Butuh Persetujuan</span>
-                        </a>
-                    </li>
-                    @endif
-                    {{-- bendum --}}
-                    @if(auth()->user()->role === 'bendum')
-                    <li>
-                        <a href="{{ route('pemasukan.pengajuan') }}">
-                            <i class="bi bi-circle"></i><span>Pengajuan Pemasukan</span>
-                        </a>
-                    </li>
-                    @endif
-                    
-                </ul>
-            </li><!-- End Components Nav -->
+            @if (auth()->user()->role === 'admin' || auth()->user()->role === 'bendum')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse"
+                        href="#">
+                        <i class="bi bi-journal-text"></i><span>Pemasukan</span><i
+                            class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="{{ route('pemasukan.catatan') }}">
+                                <i class="bi bi-circle"></i><span>Catatan Pemasukan</span>
+                            </a>
+                        </li>
+                        {{-- admin --}}
+                        @if (auth()->user()->role === 'admin')
+                            <li>
+                                <a href="{{ route('pemasukan.persetujuan') }}">
+                                    <i class="bi bi-circle"></i><span>Butuh Persetujuan</span>
+                                </a>
+                            </li>
+                        @endif
+                        {{-- bendum --}}
+                        @if (auth()->user()->role === 'bendum')
+                            <li>
+                                <a href="{{ route('pemasukan.pengajuan') }}">
+                                    <i class="bi bi-circle"></i><span>Pengajuan Pemasukan</span>
+                                </a>
+                            </li>
+                        @endif
 
-            <li class="nav-item">
-                <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-                    <i class="bi bi-journal-text"></i><span>Pengeluaran</span><i class="bi bi-chevron-down ms-auto"></i>
-                </a>
-                <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                    <li>
-                        <a href="{{ route('pengeluaran.catatan') }}">
-                            <i class="bi bi-circle"></i><span>Catatan Pengeluaran</span>
-                        </a>
-                    </li>
-                    {{-- admin --}}
-                    @if(auth()->user()->role === 'admin')
-                    <li>
-                        <a href="{{ route('pengeluaran.persetujuan') }}">
-                            <i class="bi bi-circle"></i><span>Butuh Persetujuan</span>
-                        </a>
-                    </li>
-                    @endif
-                    {{-- bendum --}}
-                    @if(auth()->user()->role === 'bendum')
-                    <li>
-                        <a href="{{ route('pengeluaran.pengajuan') }}">
-                            <i class="bi bi-circle"></i><span>Pengajuan Pengeluaran</span>
-                        </a>
-                    </li>
-                    @endif
-                </ul>
-            </li>
+                    </ul>
+                </li><!-- End Components Nav -->
+
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse"
+                        href="#">
+                        <i class="bi bi-journal-text"></i><span>Pengeluaran</span><i
+                            class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                        <li>
+                            <a href="{{ route('pengeluaran.catatan') }}">
+                                <i class="bi bi-circle"></i><span>Catatan Pengeluaran</span>
+                            </a>
+                        </li>
+                        {{-- admin --}}
+                        @if (auth()->user()->role === 'admin')
+                            <li>
+                                <a href="{{ route('pengeluaran.persetujuan') }}">
+                                    <i class="bi bi-circle"></i><span>Butuh Persetujuan</span>
+                                </a>
+                            </li>
+                        @endif
+                        {{-- bendum --}}
+                        @if (auth()->user()->role === 'bendum')
+                            <li>
+                                <a href="{{ route('pengeluaran.pengajuan') }}">
+                                    <i class="bi bi-circle"></i><span>Pengajuan Pengeluaran</span>
+                                </a>
+                            </li>
+                        @endif
+                    </ul>
+                </li>
             @endif
-       
+
             <li class="nav-item">
                 <a class="nav-link collapsed" data-bs-target="#tables-nav" data-bs-toggle="collapse" href="#">
                     <i class="bi bi-layout-text-window-reverse"></i><span>Kas Anggota</span><i
@@ -219,23 +221,32 @@
                         </a>
                     </li>
                     {{-- admin --}}
-                    @if(auth()->user()->role === 'admin')
-                    <li>
-                        <a href="{{ route('kas.persetujuan') }}">
-                            <i class="bi bi-circle"></i><span>Butuh Persetujuan</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->role === 'admin')
+                        <li>
+                            <a href="{{ route('kas.persetujuan') }}">
+                                <i class="bi bi-circle"></i><span>Butuh Persetujuan</span>
+                            </a>
+                        </li>
                     @endif
                     {{-- anggota --}}
-                    @if(auth()->user()->role === 'anggota')
-                    <li>
-                        <a href="{{ route('kas.bayar') }}">
-                            <i class="bi bi-circle"></i><span>Bayar Kas</span>
-                        </a>
-                    </li>
+                    @if (auth()->user()->role === 'anggota')
+                        <li>
+                            <a href="{{ route('kas.bayar') }}">
+                                <i class="bi bi-circle"></i><span>Bayar Kas</span>
+                            </a>
+                        </li>
                     @endif
                 </ul>
             </li><!-- End Tables Nav -->
+
+            {{-- @if (auth()->user()->role === 'admin')
+                <li class="nav-item">
+                    <a class="nav-link collapsed" href="{{ route('laporan-keuangan') }}">
+                        <i class="bi bi-journal-bookmark"></i>
+                        <span>Laporan</span>
+                    </a>
+                </li>
+            @endif --}}
 
 
         </ul>
@@ -251,7 +262,7 @@
             &copy; Copyright <strong><span>Himatif Unversitas Bengkulu</span></strong>. All Rights Reserved
         </div>
         <div class="credits">
-            
+
             Designed by <a href="https://www.instagram.com/ranahelida_/">Kepala Administrasi dan Keuangan Himatif</a>
         </div>
     </footer><!-- End Footer -->
