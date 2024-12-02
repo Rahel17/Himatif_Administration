@@ -15,11 +15,10 @@ class BayarKasController extends Controller
     public function index()
 {
     $user = Auth::user();
-    
-    // Data transaksi sesuai user login
-    $kas = Transaksi::where('user_id', $user->id)
-        ->orderBy('bulan', 'asc')
+    $kas = Transaksi::where('user_id', $user->id) // Ambil data sesuai user
+        ->orderBy('tanggal', 'desc')
         ->get();
+
     
     $months = [
         'Januari',
