@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin Keuangan Himatif',
                 'email' => 'admin@gmail.com',
-                'npm' => 'ADMIN',
+                'npm' => 'ADMIN1234',
                 // 'bidang' => 'admin',
                 'no_hp' => '08123456789',
                 'password' => bcrypt('admin'),
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Bendum',
                 'email' => 'bendum@gmail.com',
-                'npm' => 'BENDUM',
+                'npm' => 'BENDUM1234',
                 // 'bidang' => 'bendum',
                 'no_hp' => '08123456789',
                 'password' => bcrypt('bendum'),
@@ -168,7 +168,7 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Wahyu Ozorah Manurung',
                 'email' => 'wahyu@gmail.com',
-                'npm' => 'G1A022065',
+                'npm' => 'G1A022060',
                 'no_hp' => '08123456789',
                 'password' => bcrypt('121212'),
                 'role' => 'anggota',
