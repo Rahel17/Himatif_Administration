@@ -1,4 +1,3 @@
-tolong berikan lagi sedikit modifikasi pada tampilan ini, jika anggota sudah membayar namun belum di setujui oleh admin, maka button bayar akan berubah menjadi "diajukan"
 <x-app-layout>
     <div class="pagetitle">
         <h1>Pembayaran Kas Anggota</h1>
@@ -53,17 +52,14 @@ tolong berikan lagi sedikit modifikasi pada tampilan ini, jika anggota sudah mem
 
             @foreach ($months as $month)
                 @php
-                    // Cari transaksi untuk bulan tertentu yang sesuai dengan user
-                    $transaction = $kas->firstWhere('bulan', strtolower($month));
-                    $isPaid = $transaction && $transaction->status === 'setuju'; // Cek status pembayaran
+                    $status = $statuses[strtolower($month)] ?? null; // Ambil status dari array $statuses
                 @endphp
                 <div class="col">
-                    <div class="card mb-3" style="max-width: 540px;"
-                        @if ($isPaid) style="opacity: 0.6;" @endif>
+                    <div class="card mb-3" style="max-width: 540px;">
                         <div class="row g-0">
                             <div class="col-md-4 d-flex align-items-center justify-content-center">
-                                <img src="assets/img/kas-icon.png" class="img-fluid rounded-start" alt="Icon Kas"
-                                    style="width: 130px; height: 130px; object-fit: cover;">
+                                <img src="{{ asset('assets/img/kas-icon.png') }}" class="img-fluid rounded-start"
+                                    alt="Icon Kas" style="width: 130px; height: 130px; object-fit: cover;">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -75,25 +71,28 @@ tolong berikan lagi sedikit modifikasi pada tampilan ini, jika anggota sudah mem
                                     <p class="mb-1">Bidang: {{ $user->bidang }}</p>
 
                                     <!-- Tombol Bayar -->
-                                    <button type="button"
-                                        class="btn @if ($isPaid) btn-success @else btn-info @endif bayar-btn"
-                                        @if ($isPaid) disabled @endif
-                                        data-nama="{{ $user->name }}" data-npm="{{ $user->npm }}"
-                                        data-bidang="{{ $user->bidang }}" data-bulan="{{ $month }}"
-                                        data-nominal="5000" data-tanggal="{{ now()->format('Y-m-d') }}"
-                                        data-bs-toggle="modal" data-bs-target="#bayarKasModal">
-                                        @if ($isPaid)
-                                            Sudah Dibayar
-                                        @else
+                                    @if ($status === 'setuju')
+                                        <button type="button" class="btn btn-success" disabled>Sudah Dibayar</button>
+                                    @elseif ($status === 'tolak')
+                                        <button type="button" class="btn btn-warning" disabled>Ditolak</button>
+                                    @elseif ($status === 'proses')
+                                        <button type="button" class="btn btn-warning" disabled>Diproses</button>
+                                    @else
+                                        <button type="button" class="btn btn-info bayar-btn"
+                                            data-nama="{{ $user->name }}" data-npm="{{ $user->npm }}"
+                                            data-bidang="{{ $user->bidang }}" data-bulan="{{ $month }}"
+                                            data-nominal="5000" data-tanggal="{{ now()->format('Y-m-d') }}"
+                                            data-bs-toggle="modal" data-bs-target="#bayarKasModal">
                                             <i class="bi bi-plus-square"></i> Bayar
-                                        @endif
-                                    </button>
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+
 
         </div>
     </section>

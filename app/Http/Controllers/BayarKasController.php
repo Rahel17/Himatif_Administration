@@ -16,6 +16,7 @@ class BayarKasController extends Controller
 {
     $user = Auth::user();
     $kas = Transaksi::where('user_id', $user->id) // Ambil data sesuai user
+        ->whereIn('status', ['setuju', 'proses'])
         ->orderBy('tanggal', 'desc')
         ->get();
 
@@ -32,8 +33,14 @@ class BayarKasController extends Controller
         'September',
         'Oktober',
     ];
+    
+    $statuses = [];
+    foreach ($months as $month) {
+        $transaction = $kas->firstWhere('bulan', strtolower($month));
+        $statuses[strtolower($month)] = $transaction ? $transaction->status : null;
+    }
 
-    return view('kas.bayar', compact('user', 'kas', 'months'));
+    return view('kas.bayar', compact('user', 'kas', 'months', 'statuses'));
 }
 
 
