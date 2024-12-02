@@ -145,10 +145,11 @@
                                                 <input type="number" class="form-control" id="inputNominal{{ $transaksi->id }}" name="nominal" value="{{ $transaksi->nominal }}" required>
                                             </div>
 
-                                            <!-- Bukti -->
+                                            <!-- Dokumen -->
                                             <div class="col-12">
-                                                <label for="inputBukti{{ $transaksi->id }}" class="form-label">Bukti</label>
-                                                <input type="file" class="form-control" id="inputBukti{{ $transaksi->id }}" name="bukti">
+                                                <label for="inputDokumen" class="form-label">Dokumen</label>
+                                                <input type="file" class="form-control" id="inputDokumen"
+                                                       name="dokumen" accept="application/pdf,image/*,.xlsx,.xls,.csv">
                                             </div>
 
                                             {{-- Penananggung jawab --}}
