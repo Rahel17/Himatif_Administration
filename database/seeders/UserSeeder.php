@@ -83,6 +83,28 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('121212'),
                 'role' => 'anggota',                
             ],
+
+            //PSDM
+            [
+                'name' => 'Ferdy Fitriansyah Rowi',
+                'email' => 'ferdy@gmail.com',
+                'npm' => 'G1A022082',
+                'no_hp' => '08123456789',
+                'password' => bcrypt('121212'),
+                'role' => 'anggota',
+                'bidang' => 'PSDM',
+            ],
+
+            
+            [
+                'name' => 'Anissa Shanniyah Aprilia',
+                'email' => 'acel@gmail.com',
+                'npm' => 'G1A022044',
+                'no_hp' => '08123456789',
+                'password' => bcrypt('121212'),
+                'role' => 'anggota',
+                'bidang' => 'PSDM',
+            ],
             
             [
                 'name' => 'Akram Analis',
@@ -134,13 +156,23 @@ class UserSeeder extends Seeder
             ],
 
             [
-                'name' => 'Ferdy Fitriansyah Rowi',
-                'email' => 'ferdy@gmail.com',
-                'npm' => 'G1A022082',
+                'name' => 'Alif Nurhidayat',
+                'email' => 'alif@gmail.com',
+                'npm' => 'G1A022073',
                 'no_hp' => '08123456789',
                 'password' => bcrypt('121212'),
                 'role' => 'anggota',
-                'bidang' => 'PSDM',
+                'bidang' => 'Kominfo',
+            ],
+
+            [
+                'name' => 'Wahyu Ozorah Manurung',
+                'email' => 'wahyu@gmail.com',
+                'npm' => 'G1A022065',
+                'no_hp' => '08123456789',
+                'password' => bcrypt('121212'),
+                'role' => 'anggota',
+                'bidang' => 'Danus',
             ],
         ];
 
