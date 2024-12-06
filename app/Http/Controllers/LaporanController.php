@@ -25,7 +25,7 @@ class LaporanController extends Controller
             ->sum('nominal');
 
         // Total kas anggota
-        $totalKasAnggota = Transaksi::where('pemasukan', 'kas_anggota')
+        $totalKasAnggota = Transaksi::where('bulan', '!=', null)
             ->where('status', 'setuju')
             ->whereYear('tanggal', $currentYear)
             ->sum('nominal');

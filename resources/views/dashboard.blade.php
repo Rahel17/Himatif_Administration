@@ -114,11 +114,13 @@
 
                             {{-- Tombol Cetak --}}
                             <button type="button" class="btn btn-info" onclick="showPrintArea()">
-                                <i class="bi bi-printer"></i> Cetak
+                                <a href="{{ route('laporan-keuangan') }}" class="btn btn-info" target="_blank">
+                                    <i class="bi bi-printer"></i> Cetak
+                                </a>
                             </button>
 
                             <!-- Div untuk tampilkan laporan setelah tombol cetak diklik -->
-                            <div id="printableArea" style="display:none; margin-top: 20px;">
+                            {{-- <div id="printableArea" style="display:none; margin-top: 20px;">
                                 <title>Laporan Keuangan</title>
                                 <style>
                                     body {
@@ -190,7 +192,7 @@
                                         <p>Rana Qonitah Helida</p>
                                     </div>
                                 </body>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
@@ -317,18 +319,18 @@
                 });
             });
 
-            function showPrintArea() {
-                // Menyembunyikan semua konten di luar area cetak
-                var originalContent = document.body.innerHTML;
-                var printContent = document.getElementById('printableArea').innerHTML;
-                document.body.innerHTML = printContent;
+            // function showPrintArea() {
+            //     // Menyembunyikan semua konten di luar area cetak
+            //     var originalContent = document.body.innerHTML;
+            //     var printContent = document.getElementById('printableArea').innerHTML;
+            //     document.body.innerHTML = printContent;
 
-                // Menampilkan area untuk dicetak
-                window.print();
+            //     // Menampilkan area untuk dicetak
+            //     window.print();
 
-                // Setelah pencetakan selesai, mengembalikan konten asli halaman
-                document.body.innerHTML = originalContent;
-            }
+            //     // Setelah pencetakan selesai, mengembalikan konten asli halaman
+            //     document.body.innerHTML = originalContent;
+            // }
         </script>
     </section>
 

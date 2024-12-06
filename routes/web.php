@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-    Route::get('/laporan-keuangan', [DashboardController::class, 'laporanKeuangan'])->name('dashboard');
+    // Route::get('/laporan-keuangan', [DashboardController::class, 'laporanKeuangan'])->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {
