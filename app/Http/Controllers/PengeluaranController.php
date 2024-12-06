@@ -18,7 +18,7 @@ class PengeluaranController extends Controller
         $transaksis = Transaksi::where('status', 'setuju')
             ->whereNotNull('pengeluaran') // Filter hanya data pengeluaran
             ->whereNull('pemasukan')     // Pastikan data pemasukan tidak ikut
-            ->orderBy('tanggal', 'desc') // Urutkan berdasarkan tanggal
+            ->orderBy('tanggal', 'asc') // Urutkan berdasarkan tanggal
             ->get();
 
         // Ambil data user untuk dropdown atau kebutuhan lainnya

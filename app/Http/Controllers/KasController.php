@@ -29,7 +29,7 @@ class KasController extends Controller
                 ->when($bulan, function ($query) use ($bulan) {
                     return $query->where('bulan', $bulan); // Filter bulan jika dipilih
                 })
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'asc')
                 ->get();
         } else {
             // Anggota hanya melihat catatan miliknya sendiri dengan status 'setuju', kecuali pemasukan/pengeluaran
@@ -41,7 +41,7 @@ class KasController extends Controller
                 ->when($bulan, function ($query) use ($bulan) {
                     return $query->where('bulan', $bulan); // Filter bulan jika dipilih
                 })
-                ->orderBy('created_at', 'desc')
+                ->orderBy('created_at', 'asc')
                 ->get();
         }
 
