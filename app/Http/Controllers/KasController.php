@@ -15,18 +15,15 @@ class KasController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        $kas = Transaksi::where('user_id', $user->id)
-        ->whereIn('status', ['setuju', 'proses'])
-        ->orderBy('tanggal', 'desc')
-        ->get();
 
         // Ambil bulan yang dipilih dari request
         $bulan = $request->input('bulan');
 
         // Logika filter berdasarkan peran pengguna
         if ($user->role === 'admin' || $user->role === 'bendum') {
-            // Admin atau bendahara melihat semua catatan kecuali pemasukan dan pengeluaran
+            // Admin atau bendahara melihat semua catatan dengan status 'setuju', kecuali pemasukan dan pengeluaran
             $kas = Transaksi::with('user')
+                ->where('status', 'setuju') // Hanya data dengan status 'setuju'
                 ->whereNull('pemasukan') // Filter kecuali pemasukan/pengeluaran
                 ->whereNull('pengeluaran') // Filter kecuali pemasukan/pengeluaran
                 ->when($bulan, function ($query) use ($bulan) {
@@ -35,9 +32,10 @@ class KasController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {
-            // Anggota hanya melihat catatan miliknya sendiri kecuali pemasukan/pengeluaran
+            // Anggota hanya melihat catatan miliknya sendiri dengan status 'setuju', kecuali pemasukan/pengeluaran
             $kas = Transaksi::with('user')
                 ->where('user_id', $user->id)
+                ->where('status', 'setuju') // Hanya data dengan status 'setuju'
                 ->whereNull('pemasukan') // Filter kecuali pemasukan/pengeluaran
                 ->whereNull('pengeluaran') // Filter kecuali pemasukan/pengeluaran
                 ->when($bulan, function ($query) use ($bulan) {
@@ -49,6 +47,7 @@ class KasController extends Controller
 
         return view('kas.catatan', compact('kas'));
     }
+
 
 
 

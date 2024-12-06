@@ -83,8 +83,20 @@ class AnggotaController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Cari pengguna berdasarkan ID
+        $user = User::find($id);
+
+        // Jika pengguna tidak ditemukan, beri pesan error
+        if (!$user) {
+            return redirect()->route('anggota.index')->withErrors('Anggota tidak ditemukan.');
+        }
+
+        // Hapus pengguna
+        $user->delete();
+
+        // Redirect ke halaman anggota dengan pesan sukses
+        return redirect()->route('anggota.index')->with('success', 'Anggota berhasil dihapus.');
     }
 }

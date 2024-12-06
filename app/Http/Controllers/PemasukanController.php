@@ -17,7 +17,8 @@ class PemasukanController extends Controller
         // Mengambil semua transaksi yang sudah disetujui dan bulan adalah null
         $transaksis = Transaksi::where('status', 'setuju')
             ->whereNull('bulan')  // Memfilter transaksi dengan bulan null
-            ->whereNull('pengeluaran')  // Memfilter transaksi dengan bulan null
+            ->whereNull('pengeluaran')
+            ->orderBy('tanggal', 'desc')
             ->get();
 
         $users = User::where('role', 'anggota')

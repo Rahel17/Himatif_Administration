@@ -10,6 +10,15 @@
         </nav>
     </div>
 
+    {{-- Notification Success --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <div>{{ session('success') }}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -17,7 +26,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Catatan Pengeluaran Himatif</h5>
                         <p class="card-text text-muted">
-                            Pengeluaran selama satu tahun kepengurusan. Akan dipertanggungjawabkan pada Musyawarah Besar.
+                            Pengeluaran selama satu tahun kepengurusan. Akan dipertanggungjawabkan pada Musyawarah
+                            Besar.
                         </p>
 
                         <!-- Table with stripped rows -->
@@ -62,14 +72,20 @@
                                                 <td>
                                                     <div class="d-flex gap-2">
                                                         <!-- Tombol Edit -->
-                                                        <a href="#" class="btn btn-warning btn-primary" data-bs-toggle="modal" data-bs-target="#editModal{{ $transaksi->id }}">
+                                                        <a href="#" class="btn btn-warning btn-primary"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#editModal{{ $transaksi->id }}">
                                                             <i class="bi bi-pencil-fill"></i>
                                                         </a>
                                                         <!-- Tombol Hapus -->
-                                                        <form action="{{ route('pengeluaran.destroy', $transaksi->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
+                                                        <form
+                                                            action="{{ route('pengeluaran.destroy', $transaksi->id) }}"
+                                                            method="POST"
+                                                            onsubmit="return confirm('Apakah Anda yakin ingin menghapus data ini?')">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit" class="btn btn-danger"><i class="bi bi-trash-fill"></i></button>
+                                                            <button type="submit" class="btn btn-danger"><i
+                                                                    class="bi bi-trash-fill"></i></button>
                                                         </form>
                                                     </div>
                                                 </td>
@@ -88,85 +104,128 @@
 
                 <!-- Modal Edit -->
                 @foreach ($transaksis as $transaksi)
-                    <div class="modal fade" id="editModal{{ $transaksi->id }}" tabindex="-1" aria-labelledby="editModalLabel{{ $transaksi->id }}" aria-hidden="true">
+                    <div class="modal fade" id="editModal{{ $transaksi->id }}" tabindex="-1"
+                        aria-labelledby="editModalLabel{{ $transaksi->id }}" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="editModalLabel{{ $transaksi->id }}">Edit Pengeluaran</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h5 class="modal-title" id="editModalLabel{{ $transaksi->id }}">Edit Pengeluaran
+                                    </h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     <!-- Form Edit Pengeluaran -->
-                                    <form action="{{ route('pengeluaran.update', $transaksi->id) }}" method="POST" enctype="multipart/form-data">
+                                    <form action="{{ route('pengeluaran.update', $transaksi->id) }}" method="POST"
+                                        enctype="multipart/form-data">
                                         @csrf
                                         @method('PUT')
                                         <div class="row g-3">
                                             <!-- Tanggal -->
                                             <div class="col-md-6">
-                                                <label for="inputTanggal{{ $transaksi->id }}" class="form-label">Tanggal</label>
-                                                <input type="date" class="form-control" id="inputTanggal{{ $transaksi->id }}" name="tanggal" value="{{ $transaksi->tanggal }}" required>
+                                                <label for="inputTanggal{{ $transaksi->id }}"
+                                                    class="form-label">Tanggal</label>
+                                                <input type="date" class="form-control"
+                                                    id="inputTanggal{{ $transaksi->id }}" name="tanggal"
+                                                    value="{{ $transaksi->tanggal }}" required>
                                             </div>
 
                                             <!-- Kategori -->
                                             <div class="col-md-6">
-                                                <label for="inputKategori{{ $transaksi->id }}" class="form-label">Kategori</label>
-                                                <select class="form-select" id="inputKategori{{ $transaksi->id }}" name="pengeluaran" required>
+                                                <label for="inputKategori{{ $transaksi->id }}"
+                                                    class="form-label">Kategori</label>
+                                                <select class="form-select" id="inputKategori{{ $transaksi->id }}"
+                                                    name="pengeluaran" required>
                                                     <option value="" disabled>Pilih Kategori</option>
-                                                    <option value="proker" {{ $transaksi->pengeluaran == 'proker' ? 'selected' : '' }}>Proker</option>
-                                                    <option value="inventaris" {{ $transaksi->pengeluaran == 'inventaris' ? 'selected' : '' }}>Inventaris</option>
-                                                    <option value="lainnya" {{ $transaksi->pengeluaran == 'lainnya' ? 'selected' : '' }}>Lainnya</option>
+                                                    <option value="proker"
+                                                        {{ $transaksi->pengeluaran == 'proker' ? 'selected' : '' }}>
+                                                        Proker</option>
+                                                    <option value="inventaris"
+                                                        {{ $transaksi->pengeluaran == 'inventaris' ? 'selected' : '' }}>
+                                                        Inventaris</option>
+                                                    <option value="lainnya"
+                                                        {{ $transaksi->pengeluaran == 'lainnya' ? 'selected' : '' }}>
+                                                        Lainnya</option>
                                                 </select>
                                             </div>
 
                                             <!-- Uraian -->
                                             <div class="col-12">
-                                                <label for="inputUraian{{ $transaksi->id }}" class="form-label">Uraian</label>
+                                                <label for="inputUraian{{ $transaksi->id }}"
+                                                    class="form-label">Uraian</label>
                                                 <textarea class="form-control" id="inputUraian{{ $transaksi->id }}" name="uraian" rows="3">{{ $transaksi->uraian }}</textarea>
                                             </div>
-                                            
+
                                             {{-- Bidang --}}
                                             <div class="col-md-6">
-                                                <label for="inputBidang{{ $transaksi->id }}" class="form-label">Bidang</label>
-                                                <select type="text" class="form-control" id="inputBidang{{ $transaksi->id }}" name="bidang" value="{{ $transaksi->bidang }}" required>
+                                                <label for="inputBidang{{ $transaksi->id }}"
+                                                    class="form-label">Bidang</label>
+                                                <select type="text" class="form-control"
+                                                    id="inputBidang{{ $transaksi->id }}" name="bidang"
+                                                    value="{{ $transaksi->bidang }}" required>
                                                     <option value="" disabled>Pilih Bidang</option>
-                                                    <option value="Inti" {{ $transaksi->bidang == 'Inti' ? 'selected' : '' }}>Inti</option>
-                                                    <option value="PSDM" {{ $transaksi->bidang == 'PSDM' ? 'selected' : '' }}>PSDM</option>
-                                                    <option value="Kerohanian" {{ $transaksi->bidang == 'Kerohanian' ? 'selected' : '' }}>Kerohanian</option>
-                                                    <option value="Humas" {{ $transaksi->bidang == 'Humas' ? 'selected' : '' }}>Humas</option>
-                                                    <option value="Kominfo" {{ $transaksi->bidang == 'Kominfo' ? 'selected' : '' }}>Kominfo</option>
-                                                    <option value="Danus" {{ $transaksi->bidang == 'Danus' ? 'selected' : '' }}>Danus</option>
-                                                    <option value="Minbak" {{ $transaksi->bidang == 'Minbak' ? 'selected' : '' }}>Minbak</option>
+                                                    <option value="Inti"
+                                                        {{ $transaksi->bidang == 'Inti' ? 'selected' : '' }}>Inti
+                                                    </option>
+                                                    <option value="PSDM"
+                                                        {{ $transaksi->bidang == 'PSDM' ? 'selected' : '' }}>PSDM
+                                                    </option>
+                                                    <option value="Kerohanian"
+                                                        {{ $transaksi->bidang == 'Kerohanian' ? 'selected' : '' }}>
+                                                        Kerohanian</option>
+                                                    <option value="Humas"
+                                                        {{ $transaksi->bidang == 'Humas' ? 'selected' : '' }}>Humas
+                                                    </option>
+                                                    <option value="Kominfo"
+                                                        {{ $transaksi->bidang == 'Kominfo' ? 'selected' : '' }}>Kominfo
+                                                    </option>
+                                                    <option value="Danus"
+                                                        {{ $transaksi->bidang == 'Danus' ? 'selected' : '' }}>Danus
+                                                    </option>
+                                                    <option value="Minbak"
+                                                        {{ $transaksi->bidang == 'Minbak' ? 'selected' : '' }}>Minbak
+                                                    </option>
                                                 </select>
                                             </div>
 
                                             {{-- Nominal --}}
                                             <div class="col-md-6">
-                                                <label for="inputNominal{{ $transaksi->id }}" class="form-label">Nominal</label>
-                                                <input type="number" class="form-control" id="inputNominal{{ $transaksi->id }}" name="nominal" value="{{ $transaksi->nominal }}" required>
+                                                <label for="inputNominal{{ $transaksi->id }}"
+                                                    class="form-label">Nominal</label>
+                                                <input type="number" class="form-control"
+                                                    id="inputNominal{{ $transaksi->id }}" name="nominal"
+                                                    value="{{ $transaksi->nominal }}" required>
                                             </div>
 
                                             <!-- Dokumen -->
                                             <div class="col-12">
                                                 <label for="inputDokumen" class="form-label">Dokumen</label>
                                                 <input type="file" class="form-control" id="inputDokumen"
-                                                       name="dokumen" accept="application/pdf,image/*,.xlsx,.xls,.csv">
+                                                    name="dokumen" accept="application/pdf,image/*,.xlsx,.xls,.csv">
                                             </div>
 
                                             {{-- Penananggung jawab --}}
                                             <div class="col-md-6">
-                                                <label for="inputPenanggungJawab{{ $transaksi->id }}" class="form-label">Penanggung Jawab</label>
-                                                <select class="form-select" id="inputPenanggungJawab{{ $transaksi->id }}" name="penanggungjawab" required>
+                                                <label for="inputPenanggungJawab{{ $transaksi->id }}"
+                                                    class="form-label">Penanggung Jawab</label>
+                                                <select class="form-select"
+                                                    id="inputPenanggungJawab{{ $transaksi->id }}"
+                                                    name="penanggungjawab" required>
                                                     <option value="" disabled>Pilih Penanggung Jawab</option>
                                                     @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}" {{ $transaksi->penanggung_jawab == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                        <option value="{{ $user->id }}"
+                                                            {{ $transaksi->penanggung_jawab == $user->id ? 'selected' : '' }}>
+                                                            {{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
 
                                             <!-- Tombol Aksi -->
                                             <div class="col-12 text-center">
-                                                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                                                <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Batalkan</button>
+                                                <button type="submit" class="btn btn-primary">Simpan
+                                                    Perubahan</button>
+                                                <button type="reset" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Batalkan</button>
                                             </div>
                                         </div>
                                     </form>

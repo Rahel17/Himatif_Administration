@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/anggota', [AnggotaController::class, 'index'])->name('anggota.index');
 Route::post('/anggota/store', [AnggotaController::class, 'store'])->name('anggota.store');
+Route::delete('/anggota/{id}', [AnggotaController::class, 'destroy'])->name('anggota.destroy');
 
 Route::get('/CatatanPemasukan', [PemasukanController::class, 'index'])->name('pemasukan.catatan');
 Route::put('/pemasukan/{id}', [PemasukanController::class, 'update'])->name('pemasukan.update');
@@ -74,6 +75,6 @@ Route::get('/BayarKas', [BayarKasController::class, 'index'])->name('kas.bayar')
 Route::post('/BayarKas/store', [BayarKasController::class, 'store'])->name('kas.store');
 Route::post('/kas/update-status/{id}', [BayarKasController::class, 'updateStatus'])->name('kas.updateStatus');
 
-// Route::get('/laporan-keuangan', [LaporanController::class, 'laporanKeuangan'])->name('laporan-keuangan');
+Route::get('/laporan-keuangan', [LaporanController::class, 'laporanKeuangan'])->name('laporan-keuangan');
 
 require __DIR__ . '/auth.php';

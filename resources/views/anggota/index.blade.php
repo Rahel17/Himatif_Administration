@@ -9,6 +9,15 @@
         </nav>
     </div>
 
+    {{-- Notification Success --}}
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show d-flex align-items-center" role="alert">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            <div>{{ session('success') }}</div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -21,17 +30,6 @@
                             data-bs-target="#anggotaModal">
                             <i class="bi bi-plus-circle"></i> Tambah Anggota
                         </button>
-
-                        {{-- Notification Success --}}
-                        @if (session('success'))
-                            <div class="alert alert-success alert-dismissible fade show d-flex align-items-center"
-                                role="alert">
-                                <i class="bi bi-check-circle-fill me-2"></i>
-                                <div>{{ session('success') }}</div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
 
                         {{-- Notification Error --}}
                         @if ($errors->any())
@@ -168,10 +166,14 @@
                                             <a href="#" class="btn btn-warning secondary me-2">
                                                 <i class="bi bi-pencil-fill"></i>
                                             </a>
-                                            <a href="#" class="btn btn-danger secondary"
-                                                onclick="return confirm('Apakah Anda yakin ingin menghapus item ini?')">
-                                                <i class="bi bi-trash-fill"></i>
-                                            </a>
+                                            <form action="{{ route('anggota.destroy', $user->id) }}" method="POST"
+                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus anggota ini?')">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-trash-fill"></i>
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -183,7 +185,7 @@
         </div>
     </section>
 
-    {{-- animation (gaya saja hehe :))--}}
+    {{-- animation (gaya saja hehe :)) --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const alerts = document.querySelectorAll('.alert');
