@@ -69,13 +69,13 @@
                 </div>
 
                 <!-- Forgot Password -->
-                <div class="my-2 d-flex justify-content-between align-items-center">
+                {{-- <div class="my-2 d-flex justify-content-between align-items-center">
                   @if (Route::has('password.request'))
                     <a class="auth-link text-black" href="{{ route('password.request') }}">
                       Forgot password?
                     </a>
                   @endif
-                </div>
+                </div> --}}
 
                 <!-- Social Login -->
                 {{-- <div class="mb-2">
