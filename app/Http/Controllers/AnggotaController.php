@@ -77,8 +77,33 @@ class AnggotaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'npm' => 'required|string|unique:users,npm,' . $id,
+            'bidang' => 'required|in:Inti,PSDM,Kerohanian,Humas,Kominfo,Danus,Minbak',
+            'no_hp' => 'required|string|max:15',
+            'password' => 'nullable|string|min:8', // Password opsional, minimal 8 karakter jika diisi
+        ]);
+
+        // Cari anggota berdasarkan ID
+        $user = User::findOrFail($id);
+
+        // Perbarui data anggota
+        $user->name = $validated['name'];
+        $user->npm = $validated['npm'];
+        $user->bidang = $validated['bidang'];
+        $user->no_hp = $validated['no_hp'];
+
+        // Perbarui password jika diisi
+        if (!empty($validated['password'])) {
+            $user->password = bcrypt($validated['password']);
+        }
+
+        $user->save();
+
+        return redirect()->route('anggota.index')->with('success', 'Data anggota berhasil diperbarui!');
     }
+
 
     /**
      * Remove the specified resource from storage.

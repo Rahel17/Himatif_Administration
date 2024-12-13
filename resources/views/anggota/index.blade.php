@@ -18,6 +18,24 @@
         </div>
     @endif
 
+    {{-- Notification Error --}}
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+            <div>
+                <strong>Terjadi kesalahan:</strong>
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
+
     <section class="section">
         <div class="row">
             <div class="col-lg-12">
@@ -30,24 +48,6 @@
                             data-bs-target="#anggotaModal">
                             <i class="bi bi-plus-circle"></i> Tambah Anggota
                         </button>
-
-                        {{-- Notification Error --}}
-                        @if ($errors->any())
-                            <div class="alert alert-danger alert-dismissible fade show d-flex align-items-center"
-                                role="alert">
-                                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                                <div>
-                                    <strong>Terjadi kesalahan:</strong>
-                                    <ul class="mb-0">
-                                        @foreach ($errors->all() as $error)
-                                            <li>{{ $error }}</li>
-                                        @endforeach
-                                    </ul>
-                                </div>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-                        @endif
 
 
                         {{-- Modal Tambah Anggota --}}
@@ -143,6 +143,66 @@
                             </div>
                         </div>
 
+                        {{-- Modal Edit Anggota --}}
+                        <div class="modal fade" id="editAnggotaModal" tabindex="-1"
+                            aria-labelledby="editAnggotaModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editAnggotaModalLabel">Edit Anggota</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Form Edit Anggota -->
+                                        <form action="" method="POST" id="editAnggotaForm" class="row g-3">
+                                            @csrf
+                                            @method('PUT')
+                                            <div class="col-12">
+                                                <label for="edit_name" class="form-label">Nama</label>
+                                                <input type="text" class="form-control" id="edit_name"
+                                                    name="name" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="edit_npm" class="form-label">NPM</label>
+                                                <input type="text" class="form-control" id="edit_npm"
+                                                    name="npm" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="edit_bidang" class="form-label">Bidang</label>
+                                                <select class="form-control" id="edit_bidang" name="bidang"
+                                                    required>
+                                                    <option value="Inti">Inti</option>
+                                                    <option value="PSDM">PSDM</option>
+                                                    <option value="Kerohanian">Kerohanian</option>
+                                                    <option value="Humas">Humas</option>
+                                                    <option value="Kominfo">Kominfo</option>
+                                                    <option value="Danus">Danus</option>
+                                                    <option value="Minbak">Minbak</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="edit_no_hp" class="form-label">No Hp</label>
+                                                <input type="text" class="form-control" id="edit_no_hp"
+                                                    name="no_hp" required>
+                                            </div>
+                                            <div class="col-12">
+                                                <label for="edit_password" class="form-label">Password (Kosongkan jika
+                                                    tidak ingin mengubah)</label>
+                                                <input type="password" class="form-control" id="edit_password"
+                                                    name="password">
+                                            </div>
+
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-warning">Simpan
+                                                    Perubahan</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <table class="table datatable">
                             <thead>
                                 <tr>
@@ -163,16 +223,19 @@
                                         <td>{{ $user->bidang }}</td>
                                         <td>{{ $user->no_hp }}</td>
                                         <td class="d-flex justify-content-center align-items-center">
-                                            <a href="#" class="btn btn-warning secondary me-2">
+                                            <button class="btn btn-warning me-2 edit-button"
+                                                data-id="{{ $user->id }}" data-name="{{ $user->name }}"
+                                                data-npm="{{ $user->npm }}" data-bidang="{{ $user->bidang }}"
+                                                data-no_hp="{{ $user->no_hp }}" data-bs-toggle="modal"
+                                                data-bs-target="#editAnggotaModal">
                                                 <i class="bi bi-pencil-fill"></i>
-                                            </a>
+                                            </button>
                                             <form action="{{ route('anggota.destroy', $user->id) }}" method="POST"
-                                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus anggota ini?')">
+                                                onsubmit="return confirm('Yakin?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="bi bi-trash-fill"></i>
-                                                </button>
+                                                <button type="submit" class="btn btn-danger"><i
+                                                        class="bi bi-trash-fill"></i></button>
                                             </form>
                                         </td>
                                     </tr>
@@ -188,12 +251,28 @@
     {{-- animation (gaya saja hehe :)) --}}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                setTimeout(() => {
-                    alert.classList.add('animate__fadeOutUp'); // Tambahkan animasi keluar
-                    setTimeout(() => alert.remove(), 1000); // Hapus elemen setelah animasi
-                }, 5000); // Waktu delay (5 detik)
+            // Handle edit button click
+            document.querySelectorAll('.edit-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    const form = document.getElementById('editAnggotaForm');
+                    form.action = `/anggota/${button.dataset.id}`; // Update action URL
+                    document.getElementById('edit_name').value = button.dataset.name;
+                    document.getElementById('edit_npm').value = button.dataset.npm;
+                    document.getElementById('edit_bidang').value = button.dataset.bidang;
+                    document.getElementById('edit_no_hp').value = button.dataset.no_hp;
+                });
+            });
+        });
+
+        document.querySelectorAll('.edit-button').forEach(button => {
+            button.addEventListener('click', () => {
+                const form = document.getElementById('editAnggotaForm');
+                form.action = `/anggota/${button.dataset.id}`; // Update action URL
+                document.getElementById('edit_name').value = button.dataset.name;
+                document.getElementById('edit_npm').value = button.dataset.npm;
+                document.getElementById('edit_bidang').value = button.dataset.bidang;
+                document.getElementById('edit_no_hp').value = button.dataset.no_hp;
+                document.getElementById('edit_password').value = ''; // Reset password field
             });
         });
     </script>
